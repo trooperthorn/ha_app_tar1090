@@ -1,4 +1,4 @@
-#ha-bridge-status { position:fixed; bottom:8px; left:8px; z-index:10000; padding:5px 9px; border-radius:4px; background:#17212de8; color:#b5e6cd; font:12px system-ui,sans-serif; cursor:pointer; }
+#ha-bridge-status { position:fixed; bottom:32px; left:8px; z-index:10000; padding:5px 9px; border-radius:4px; background:#17212de8; color:#b5e6cd; font:12px system-ui,sans-serif; cursor:pointer; }
 #ha-bridge-status[data-state="stale"], #ha-bridge-status[data-state="waiting"] { color:#ffe1a3; }
 #ha-bridge-status[data-state="expired"] { color:#ffb8b8; }
 #RP, #heatmapButton, #replayButton, #history_collapse, #feature_landings, #flight_activity_expand { display:none !important; }

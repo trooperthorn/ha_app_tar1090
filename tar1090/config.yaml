@@ -1,5 +1,5 @@
 name: Local Aircraft (tar1090)
-version: 0.1.0-beta.1
+version: 0.1.0-beta.2
 slug: tar1090
 description: Local aircraft map with one bandwidth-controlled remote receiver feed
 url: https://github.com/trooperthorn/ha_app_tar1090

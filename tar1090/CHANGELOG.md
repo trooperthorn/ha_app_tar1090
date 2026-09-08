@@ -1,3 +1,8 @@
+# 0.1.0-beta.2
+
+- Move the status badge above the scale bar, preserving both controls in the embedded map.
+- Add controlled visual comparison evidence from the installed Pi frontend.
+
 # 0.1.0-beta.1
 
 - Local-receiver frontend derived from ADSBexchange/tar1090, with hosted advertising, identity, challenge, and flight-activity dependencies removed from the deployed entry page.

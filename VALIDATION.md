@@ -23,3 +23,9 @@ Release remains experimental until these checks pass. CI results must be recorde
 ## Remote CI evidence
 
 Native amd64 and ARM64 container builds, ordinary smoke tests, and enforced AppArmor smoke tests passed in GitHub Actions. The complete suite (Python, Node 22, staged browser checks, both architectures) passed in runs 34198784679 and 34198930475. These validate the pre-release implementation; subsequent final-head/tag runs are authoritative for a published image. They do not replace HA OS acceptance.
+
+## Controlled installed-Pi frontend comparison
+
+The Pi's existing frontend and the app were rendered at 1440x900 with identical synthetic aircraft, receiver position, query parameters and blank-basemap request. Both reported zoom 9, orientation 150 degrees, extended labels 2 and altitude ceiling 10,000 feet; aircraft placement and labels matched visually with no browser errors. The blank background differed between implementations; this does not validate parity for the user's selected production basemap. The comparison caught the new status badge overlapping the scale bar; beta.2 moves it above the scale. Original screenshots and measurements are local research artifacts.
+
+Beta.1 publishing run 34199210233 completed successfully, including validation on both architectures, signed image and prerelease creation. Anonymous registry inspection confirmed amd64/arm64 manifests. Beta.2 uses a new immutable version for the visual correction.
