@@ -1,0 +1,60 @@
+name: Publish experimental app
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  validate:
+    uses: ./.github/workflows/ci.yaml
+  publish:
+    needs: validate
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check version and immutable destination
+        id: version
+        env:
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("tar1090/versions.json"))["app"])')
+          test "$REF_NAME" = "v$VERSION"
+          if docker buildx imagetools inspect "ghcr.io/trooperthorn/ha-app-tar1090:$VERSION" >/dev/null 2>&1; then
+            echo 'Version already exists; increment the version rather than overwrite it.'
+            exit 1
+          fi
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v6
+        id: build
+        with:
+          context: .
+          file: tar1090/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          provenance: true
+          sbom: true
+          tags: ghcr.io/trooperthorn/ha-app-tar1090:${{ steps.version.outputs.value }}
+          labels: |
+            io.hass.version=${{ steps.version.outputs.value }}
+            io.hass.arch=aarch64|amd64
+            org.opencontainers.image.revision=${{ github.sha }}
+      - uses: sigstore/cosign-installer@v3
+      - name: Sign image and create prerelease
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          cosign sign --yes "ghcr.io/trooperthorn/ha-app-tar1090@$DIGEST"
+          gh release create "v$VERSION" --prerelease --title "Local Aircraft $VERSION" --notes-file tar1090/CHANGELOG.md dashboard/tar1090-card.js

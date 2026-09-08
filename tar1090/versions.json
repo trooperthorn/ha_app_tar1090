@@ -1,0 +1,8 @@
+{
+  "app": "0.1.0-beta.1",
+  "frontend_upstream": "78bfa3f58f97c1694b190e66a400604e8b0f0b81",
+  "frontend_version": "3.14.1794",
+  "database": "690bde8686ac180e8a185c5bdf3fb02ad11581f9",
+  "database_archive_sha256": "a6c772fafd04acf8c5d0c00d0eeb5ec669020d133275357c2cec676e96925703",
+  "base_image": "ghcr.io/home-assistant/base@sha256:93ef607824e3f27e868f11b10938283a98bf880ed57bcf8eaa81c6c2d521f6f5"
+}
