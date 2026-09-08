@@ -1,0 +1,33 @@
+#include <tunables/global>
+profile tar1090 flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  network inet stream,
+  network inet6 stream,
+  signal (send,receive),
+  capability chown,
+  capability setuid,
+  capability setgid,
+  capability dac_override,
+  /init rix,
+  /bin/** rix,
+  /usr/bin/** rix,
+  /usr/sbin/nginx rix,
+  /usr/lib/** mr,
+  /lib/** mr,
+  /package/** rix,
+  /command/** rix,
+  /etc/** r,
+  /etc/services.d/** rix,
+  /run/** rwkix,
+  /tmp/** rwk,
+  /data/options.json r,
+  /opt/tar1090/** r,
+  /opt/tar1090/app/__pycache__/** rw,
+  /var/lib/nginx/** rwk,
+  /var/log/nginx/** rw,
+  /dev/null rw,
+  /dev/stdout rw,
+  /dev/stderr rw,
+  /proc/** r,
+}

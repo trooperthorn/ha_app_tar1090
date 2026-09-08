@@ -1,3 +1,19 @@
+# Local Aircraft for Home Assistant OS
+
+An experimental tar1090 App for receivers across constrained network links. It serves the map and sampled history on HA's side and shares one paced, compressed aircraft feed between all displays.
+
+- [Installation and dashboard card](tar1090/DOCS.md)
+- [App changelog](tar1090/CHANGELOG.md)
+- [Development and validation](AGENTS.md)
+- [Optional Pi-side exporter](pi-exporter/README.md)
+- [Validation evidence](VALIDATION.md)
+
+Build from repository root: `docker build -f tar1090/Dockerfile -t ha-tar1090:test .`.
+App Store installs use published images; do not run the legacy installer on HA OS.
+
+The frontend derives from ADSBexchange/tar1090 and wiedehopf/tar1090. Original notices and source are retained below. App-only changes are applied by `tools/build_frontend.py` when staging the image.
+
+## Original upstream documentation (legacy host installation)
 # tar1090
 
 

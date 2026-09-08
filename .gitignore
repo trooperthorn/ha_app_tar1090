@@ -370,3 +370,8 @@ html/ax-identity.js
 html/layers.js
 html/config-feature-flags.js
 html/config-uav.js
+# HA app build/test artifacts
+work/
+__pycache__/
+*.pyc
+node_modules/

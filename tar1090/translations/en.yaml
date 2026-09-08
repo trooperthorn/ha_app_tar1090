@@ -1,0 +1,22 @@
+configuration:
+  source_url:
+    name: Receiver base URL
+    description: Local receiver website URL; the app appends /data/aircraft.json.
+  poll_seconds:
+    name: Minimum delay between requests (seconds)
+  timeout_seconds:
+    name: Source request timeout (seconds)
+  stale_seconds:
+    name: Mark source stale after (seconds)
+  expire_seconds:
+    name: Remove expired aircraft after (seconds)
+  history_minutes:
+    name: Local sampled history retention (minutes)
+  history_mb:
+    name: History memory budget (MiB)
+  max_response_mb:
+    name: Maximum source response size (MiB)
+  site_name:
+    name: Receiver display name
+  map_type:
+    name: Basemap provider

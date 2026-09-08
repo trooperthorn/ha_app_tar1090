@@ -1,0 +1,7 @@
+.git
+work
+outputs
+**/__pycache__
+**/node_modules
+test
+tests

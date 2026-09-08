@@ -1,3 +1,10 @@
+# Home Assistant App development
+
+Read AGENTS.md first. The app has an explicit staging build in tools/build_frontend.py, Python collector tests in tests/, browser tests, and container tests. Do not use the legacy install.sh workflow for the app. The upstream installer does not render all hosted templates in this fork; the app build deliberately generates local layers and omits hosted account/challenge templates.
+
+The frontend remains vanilla JavaScript. App settings come from /data/options.json; the collector supplies a local receiver capability contract. No runtime upstream self-update and no data fetch triggered by browser cache misses.
+
+The following is retained upstream background. Its host-installation/template statements do not describe the HA app build.
 # CLAUDE.md
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.

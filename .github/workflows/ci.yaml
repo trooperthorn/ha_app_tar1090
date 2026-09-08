@@ -1,0 +1,50 @@
+name: Validate app
+on:
+  push:
+    branches: [master, 'feat/**']
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m unittest discover -s tests -v
+      - run: node --test
+      - run: |
+          python tools/fetch_database.py work/database
+          python tools/build_frontend.py --database work/database --output work/web
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+          node tools/browser_check.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-evidence
+          path: work/*.png
+  container:
+    strategy:
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f tar1090/Dockerfile -t ha-tar1090:test .
+      - run: python3 tools/container_smoke.py
+      - name: Enforced AppArmor smoke test when available
+        run: |
+          if docker info --format '{{json .SecurityOptions}}' | grep -q apparmor; then
+            sudo apparmor_parser -r tar1090/apparmor.txt
+            APPARMOR_PROFILE=tar1090 python3 tools/container_smoke.py
+          else
+            echo 'AppArmor unavailable on this runner; HA OS validation remains required.'
+          fi

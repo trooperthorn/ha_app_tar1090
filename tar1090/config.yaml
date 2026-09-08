@@ -1,0 +1,40 @@
+name: Local Aircraft (tar1090)
+version: 0.1.0-beta.2
+slug: tar1090
+description: Local aircraft map with one bandwidth-controlled remote receiver feed
+url: https://github.com/trooperthorn/ha_app_tar1090
+arch:
+  - amd64
+  - aarch64
+stage: experimental
+startup: application
+boot: auto
+init: false
+ingress: true
+ingress_port: 8099
+panel_icon: mdi:airplane
+panel_title: Aircraft
+watchdog: http://[HOST]:8099/health
+image: ghcr.io/trooperthorn/ha-app-tar1090
+options:
+  source_url: http://192.168.30.57:1090
+  poll_seconds: 5
+  timeout_seconds: 4
+  stale_seconds: 20
+  expire_seconds: 60
+  history_minutes: 60
+  history_mb: 32
+  max_response_mb: 8
+  site_name: Local aircraft
+  map_type: osm
+schema:
+  source_url: url
+  poll_seconds: int(2,60)
+  timeout_seconds: int(1,30)
+  stale_seconds: int(5,300)
+  expire_seconds: int(10,900)
+  history_minutes: int(1,480)
+  history_mb: int(1,256)
+  max_response_mb: int(1,32)
+  site_name: str
+  map_type: list(osm|carto_dark_all|carto_light_all|esri|blank)
